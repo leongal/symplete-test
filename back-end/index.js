@@ -86,8 +86,6 @@ server.post('/update', async (req, res) => {
 
     let finalQuery = prefix + sub + end;
 
-    console.log("Query: ", finalQuery);
-
     connection.query(finalQuery, (err, res) => {
         if (err) {
             return console.error('error: ' + err.message);

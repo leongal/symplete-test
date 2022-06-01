@@ -7,7 +7,6 @@ import axios from 'axios';
 const SYMPLETE_API = process.env.REACT_APP_SYMPLETE_API || "http://localhost:3001/";
 
 export default function DragDrop() {
-	console.log("API: ", SYMPLETE_API)
 	const dragItem = useRef();
 	const dragOverItem = useRef();
 	const [list, setList] = useState();
@@ -41,10 +40,9 @@ export default function DragDrop() {
 	}
 
 	async function updateCategory(list) {
-		let res = await axios.post(`${SYMPLETE_API}/update`, {
+		await axios.post(`${SYMPLETE_API}/update`, {
 			list
 		})
-		console.log("Update Response: ", res);
 	}
 
 	useEffect(() => {
@@ -52,28 +50,26 @@ export default function DragDrop() {
 	}, [])
 
 	return (
-		<>
-			<Container>
-				<List>
-					{list && list.map((item, index) => (
-						<Item
-							onDragStart={(e) => dragStart(e, index)}
-							onDragEnter={(e) => dragEnter(e, index)}
-							onDragEnd={drop}
-							onDragOver={dragOver}
-							key={index}
-							draggable>
-								<span style={{fontWeight: 'normal'}}>{item.category}</span>
-								<DragIndicator style={{
-									float: 'right', 
-									padding: 'inherit',
-									cursor: '-webkit-grab',
-								}} />
-						</Item>
-					))}
-				</List>
-			</Container>
-		</>
+		<Container>
+			<List>
+				{list && list.map((item, index) => (
+					<Item
+						onDragStart={(e) => dragStart(e, index)}
+						onDragEnter={(e) => dragEnter(e, index)}
+						onDragEnd={drop}
+						onDragOver={dragOver}
+						key={index}
+						draggable>
+							<span style={{fontWeight: 'normal'}}>{item.category}</span>
+							<DragIndicator style={{
+								float: 'right', 
+								padding: 'inherit',
+								cursor: '-webkit-grab',
+							}} />
+					</Item>
+				))}
+			</List>
+		</Container>
 	);
 }
 
